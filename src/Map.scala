@@ -40,6 +40,36 @@ object Map extends JFXApp
   }
   var characterSpeed: Double = 1.0
 
+  val tree1: Circle = new Circle
+  {
+    centerX = Math.floor(Math.random() * 1400)
+    centerY = Math.floor(Math.random() * 900)
+    radius = 100
+    fill = Color.DarkOliveGreen
+  }
+  val tree2: Circle = new Circle
+  {
+    centerX = Math.floor(Math.random() * 1400)
+    centerY = Math.floor(Math.random() * 900)
+    radius = 100
+    fill = Color.DarkOliveGreen
+  }
+  val crate1: Rectangle = new Rectangle
+  {
+    x = Math.floor(Math.random() * 1300)
+    y = Math.floor(Math.random() * 800)
+    width = 100
+    height = 180
+    fill = Color.SandyBrown
+  }
+  val crate2: Rectangle = new Rectangle
+  {
+    x = Math.floor(Math.random() * 1300)
+    y = Math.floor(Math.random() * 800)
+    width = 180
+    height = 100
+    fill = Color.SandyBrown
+  }
   def Keys(x: KeyCode): Unit =
   {
     x.getName match
@@ -65,7 +95,7 @@ object Map extends JFXApp
     scene = new Scene(1500,1000)
     {
       fill = Color.SeaGreen
-      content = List(player1, player2)
+      content = List(player1, player2, tree1, tree2, crate1, crate2)
 
       onMouseClicked = (event: MouseEvent) =>
       {
@@ -79,6 +109,7 @@ object Map extends JFXApp
             //makes game changes
             val enemy: Player = game.playerMap("p2")
             val damage: Double = .14285714286
+            //val damage: Double = 1
             enemy.playerHealth -= damage
             println(enemy.playerHealth)
 
@@ -99,10 +130,17 @@ object Map extends JFXApp
       }
       def bulletCollided(bullet: Rectangle): Boolean =
       {
-        if(((bullet.x.value < player2.x.value + 40) && (bullet.x.value > player2.x.value)) && ((bullet.y.value < player2.y.value + 40) && (bullet.y.value > player2.y.value)))
+        if(game.playerMap("p2").playerHealth > 0)
         {
-          content.remove(bullet)
-          true
+          if(((bullet.x.value < player2.x.value + 40) && (bullet.x.value > player2.x.value)) && ((bullet.y.value < player2.y.value + 40) && (bullet.y.value > player2.y.value)))
+          {
+            content.remove(bullet)
+            true
+          }
+          else
+          {
+            false
+          }
         }
         else
         {
