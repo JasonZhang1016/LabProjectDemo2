@@ -78,12 +78,14 @@ object Map extends JFXApp
           {
             //makes game changes
             val enemy: Player = game.playerMap("p2")
-            val damage: Double = .142857142855
+            val damage: Double = .14285714286
             enemy.playerHealth -= damage
+            println(enemy.playerHealth)
 
             //update front end
             if(checkIfPlayerDead(enemy))
             {
+              game.determineWinner()
               content.remove(player2)
             }
           }

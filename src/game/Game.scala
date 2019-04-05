@@ -41,7 +41,7 @@ class Game
       {
         if(player.playerHealth != 0)
         {
-          //print(name + " is the last survivor! \n")
+          println(name + " is the last survivor!")
           winner = player
         }
       }
