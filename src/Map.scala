@@ -103,7 +103,7 @@ object Map extends JFXApp
         content.add(bullet)
         val timer = AnimationTimer(t =>
         {
-          bulletFired(bullet, 5)
+          bulletFired(bullet, 5, event)
           if(bulletCollided(bullet))
           {
             //makes game changes
@@ -123,10 +123,15 @@ object Map extends JFXApp
         })
         timer.start()
       }
-      def bulletFired(bullet: Rectangle, bulletSpeed: Int): Unit =
+      def bulletFired(bullet: Rectangle, bulletSpeed: Int, event: MouseEvent): Unit =
       {
-        bullet.x.value -= bulletSpeed
-        bullet.y.value -= bulletSpeed
+        var xValue = bullet.x.value - event.x
+        var yValue = bullet.y.value - event.y
+        var distance = math.sqrt(math.pow(xValue, 2) + math.pow(yValue, 2))
+        bullet.x.value = bullet.x.value + xValue / distance * bulletSpeed
+        bullet.y.value = bullet.y.value + yValue / distance * bulletSpeed
+//        bullet.x.value -= bulletSpeed
+//        bullet.y.value -= bulletSpeed
       }
       def bulletCollided(bullet: Rectangle): Boolean =
       {
